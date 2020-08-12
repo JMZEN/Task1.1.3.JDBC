@@ -3,10 +3,7 @@ package jm.task.core.jdbc.dao;
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,7 +29,7 @@ public class UserDaoJDBCImpl implements UserDao {
         try (Statement statement = util.getConnection().createStatement()) {
             statement.execute(createSQLTable);
             statement.close();
-            System.out.println("Table created");
+            System.out.println("Таблица создана");
         } catch (SQLException ignored) {
         }
     }
@@ -42,22 +39,24 @@ public class UserDaoJDBCImpl implements UserDao {
         try (PreparedStatement preparedStatement = util.getConnection()
                 .prepareStatement("DROP TABLE User")) {
             preparedStatement.executeUpdate();
-            System.out.println("Table dropped");
+            System.out.println("Таблица удалена");
         } catch (SQLException ignored) {
         }
     }
 
     @Override
     public void saveUser(String name, String lastName, byte age) {
-        try (PreparedStatement preparedStatement = util.getConnection()
-                .prepareStatement("INSERT INTO User (name, lastName, age) VALUES( ?, ?, ?)")) {
+        try (Connection connection = util.getTransactedConnection();
+             PreparedStatement preparedStatement = connection
+                     .prepareStatement("INSERT INTO User (name, lastName, age) VALUES( ?, ?, ?)")) {
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, lastName);
             preparedStatement.setByte(3, age);
             preparedStatement.executeUpdate();
-            System.out.printf("User c именем %s добавлен в базу данных\n", name);
-        } catch (SQLException e) {
-            e.printStackTrace();
+            connection.commit();
+            System.out.printf("Пользователь c именем %s добавлен в базу данных\n", name);
+        } catch (SQLException exception) {
+            exception.printStackTrace();
         }
     }
 
@@ -76,9 +75,10 @@ public class UserDaoJDBCImpl implements UserDao {
     @Override
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
+
         try (PreparedStatement preparedStatement = util.getConnection()
                 .prepareStatement("SELECT * FROM User");
-             ResultSet resultSet = preparedStatement.executeQuery();) {
+             ResultSet resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
                 String name = resultSet.getString(2);
                 String lastName = resultSet.getString(3);
@@ -96,7 +96,7 @@ public class UserDaoJDBCImpl implements UserDao {
         try (PreparedStatement preparedStatement = util.getConnection()
                 .prepareStatement("DELETE FROM User")) {
             preparedStatement.executeUpdate();
-            System.out.println("Table cleaned");
+            System.out.println("Таблица очищена");
         } catch (SQLException e) {
             e.printStackTrace();
         }
