@@ -1,0 +1,8 @@
+/Users/ivannaumov/IdeaProjects/CoreTaskTemplate/src/main/java/jm/task/core/jdbc/util/Util.java
+/Users/ivannaumov/IdeaProjects/CoreTaskTemplate/src/main/java/jm/task/core/jdbc/dao/UserDaoHibernateImpl.java
+/Users/ivannaumov/IdeaProjects/CoreTaskTemplate/src/main/java/jm/task/core/jdbc/service/UserServiceImpl.java
+/Users/ivannaumov/IdeaProjects/CoreTaskTemplate/src/main/java/jm/task/core/jdbc/service/UserService.java
+/Users/ivannaumov/IdeaProjects/CoreTaskTemplate/src/main/java/jm/task/core/jdbc/dao/UserDao.java
+/Users/ivannaumov/IdeaProjects/CoreTaskTemplate/src/main/java/jm/task/core/jdbc/dao/UserDaoJDBCImpl.java
+/Users/ivannaumov/IdeaProjects/CoreTaskTemplate/src/main/java/jm/task/core/jdbc/model/User.java
+/Users/ivannaumov/IdeaProjects/CoreTaskTemplate/src/main/java/jm/task/core/jdbc/Main.java
