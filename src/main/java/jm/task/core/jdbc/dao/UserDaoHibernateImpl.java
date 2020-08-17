@@ -45,10 +45,6 @@ public class UserDaoHibernateImpl implements UserDao {
     @Override
     public void saveUser(String name, String lastName, byte age) {
         User newUser = new User(name, lastName, age);
-        /*newUser.setName(name);
-        newUser.setLastName(lastName);
-        newUser.setAge(age);*/
-
         try (Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             session.save(newUser);
