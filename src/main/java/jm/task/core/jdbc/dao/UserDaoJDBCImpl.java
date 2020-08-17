@@ -2,21 +2,14 @@ package jm.task.core.jdbc.dao;
 
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
+import org.hibernate.tool.schema.spi.CommandAcceptanceException;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoJDBCImpl implements UserDao {
-    Util util;
-
-    {
-        try {
-            util = new Util();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+    private final Util util = new Util();
 
     public UserDaoJDBCImpl() {
 
@@ -24,20 +17,18 @@ public class UserDaoJDBCImpl implements UserDao {
 
     @Override
     public void createUsersTable() {
-        String createSQLTable = "CREATE TABLE User (id MEDIUMINT NOT NULL AUTO_INCREMENT, name VARCHAR(15), " +
-                "lastName VARCHAR(15), age TINYINT, PRIMARY KEY (id))";
+        String createSQLTable = "CREATE TABLE User (id MEDIUMINT NOT NULL AUTO_INCREMENT, name VARCHAR(15), lastName VARCHAR(15), age TINYINT, PRIMARY KEY (id))";
         try (Statement statement = util.getConnection().createStatement()) {
             statement.execute(createSQLTable);
-            statement.close();
             System.out.println("Таблица создана");
-        } catch (SQLException ignored) {
+        } catch (SQLException | CommandAcceptanceException ignored) {
         }
     }
 
     @Override
     public void dropUsersTable() {
         try (PreparedStatement preparedStatement = util.getConnection()
-                .prepareStatement("DROP TABLE User")) {
+                .prepareStatement("DROP TABLE IF EXISTS User")) {
             preparedStatement.executeUpdate();
             System.out.println("Таблица удалена");
         } catch (SQLException ignored) {
