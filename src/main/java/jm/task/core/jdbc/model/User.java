@@ -6,7 +6,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Users")
+@Table(name = "UsersDataBase")
 @DynamicUpdate
 @DynamicInsert
 public class User {
@@ -14,10 +14,13 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column
     private String name;
 
+    @Column
     private String lastName;
 
+    @Column
     private Byte age;
 
     public User() {
