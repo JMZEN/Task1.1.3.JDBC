@@ -7,10 +7,15 @@ import jm.task.core.jdbc.util.Util;
 import java.sql.SQLException;
 
 public class Main {
+    private final String testName = "Ivan";
+    private final String testLastName = "Ivanov";
+    private final byte testAge = 5;
+
     public static void main(String[] args) {
+
         UserService userService = new UserServiceImpl();
         userService.createUsersTable();
-        userService.saveUser("Ivan", "Ivanovic", (byte) 35);
+        userService.saveUser("Ivan", "Ivanov", (byte) 5);
         userService.saveUser("Petr", "Ivanovic", (byte) 45);
         userService.saveUser("Alexey", "Ivanovic", (byte) 55);
         userService.saveUser("Alex", "Ivanovic", (byte) 15);
